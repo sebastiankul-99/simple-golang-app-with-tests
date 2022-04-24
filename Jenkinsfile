@@ -48,6 +48,7 @@ pipeline {
                     }
                 }
             steps {
+                sh 'go test'
                 sh 'ls /app/simple-golang-app-with-tests'
                 sh 'go test /app/simple-golang-app-with-tests'
                
