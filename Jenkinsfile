@@ -27,7 +27,7 @@ pipeline {
                 sh 'go version'
 
                 dir('/app/simple-golang-app-with-tests') {
-                sh "pwd"
+               
                 sh 'ls'
                  }
              //   sh 'rm -r ../../build/*'
