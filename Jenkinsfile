@@ -1,5 +1,7 @@
 pipeline {
-    agent {
+    agent any
+
+    /*agent {
         dockerfile {
             filename 'Dockerfile-build'
             dir 'build'
@@ -16,13 +18,18 @@ pipeline {
             label 'docker_app_build_test'
             args '-v in-vol:/build  -v out-vol:/output'
         }
-    }
-   
+    }*/
+
+   script{
+        docker.build("docker_app_build_image:latest", "-f Dockerfile-build .") 
+        docker.build("docker_app_build_test:latest", "-f Dockerfile-test .") 
+   }
     stages {
         stage('Build') {
             agent {
                 docker { 
-                    image 'docker_app_build_image:latest'
+                    image'docker_app_build_image:latest'
+                    args '-v in-vol:/build  -v out-vol:/output --rm'
                     }
                 }
             steps {
