@@ -25,6 +25,11 @@ pipeline {
                 sh 'ls ~/'
                 sh 'ls /app/simple-golang-app-with-tests'
                 sh 'go version'
+
+                dir('/app/simple-golang-app-with-tests') {
+                sh "pwd"
+                sh 'ls'
+                 }
              //   sh 'rm -r ../../build/*'
               //  sh 'rm -r ../../output/*'
                 sh 'pwd'
