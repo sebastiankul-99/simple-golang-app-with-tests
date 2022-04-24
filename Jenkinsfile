@@ -9,7 +9,7 @@ pipeline {
                     sh "docker images "
                     scripts {
                          
-                         def  build_container = docker.image('docker_app_build_image:latest').withRun('--name build_container -v in-vol:/build  -v out-vol:/output --rm  ') { 
+                         def  build_container = docker.image('docker_app_build_image:latest', "--rm build_container").withRun('--name build_container -v in-vol:/build  -v out-vol:/output  --user root') { 
                                 //docker.image('docker_app_build_image:latest').inside{
                                     sh 'rm -rf /build/*'
                                     sh 'rm -rf /output/*'
