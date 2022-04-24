@@ -27,14 +27,14 @@ pipeline {
                 sh 'go version'
 
                  
-                sh 'rm -r /build/*'
-                sh 'rm -r /output/*'
+                sh 'rm -r ~/build/'
+                sh 'rm -r ~/output/'
                 sh 'pwd'
                 sh 'cd '
                 sh 'ls'
                 
-                sh 'cp -r !(/app/simple-golang-app-with-tests/simple-golang-app-with-tests)  /build/'
-                sh 'cp -r  /app/simple-golang-app-with-tests /output/'
+                sh 'cp -r !(~/app/simple-golang-app-with-tests/simple-golang-app-with-tests)  /build/'
+                sh 'cp -r  ~/app/simple-golang-app-with-tests /output/'
                 sh 'ls /build'
                 sh 'ls output'
             }
