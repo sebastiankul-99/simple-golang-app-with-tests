@@ -1,7 +1,8 @@
 pipeline {
-    agent any
+    agent none
     stages {
         stage('CreateBuildImage') {
+            agent any
             steps {
                    
                     sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
