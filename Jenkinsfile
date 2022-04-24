@@ -2,9 +2,9 @@ pipeline {
     agent none
     stages {
         stage('Logging') {
-             agent { node { label 'swarm-ci' } }
+             agent any
              steps {
-                 sh 'docker-compose up -d'
+                 sh '/usr/local/bin/docker-compose up -d'
              }
         }
        
