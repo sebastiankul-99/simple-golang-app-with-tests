@@ -36,8 +36,8 @@ pipeline {
             steps {
                  sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
                  script {
-                    docker.image('docker_app_build_image:latest').withRun('-v in-vol:/build  -v out-vol:/output --rm') { c ->
-                        docker.image('docker_app_build_image:latest').inside{
+                    docker.image('docker_app_build_image:latest').withRun('-v in-vol:/build  -v out-vol:/output --rm -it ') { c ->
+                        //docker.image('docker_app_build_image:latest').inside{
                             sh 'ls'
                             sh 'ls ../'
                             sh 'ls ../../'
@@ -46,7 +46,7 @@ pipeline {
                             sh 'rm -r ../../output/*'
                             sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
                             sh 'cp -r  . ../../output/'
-                        }
+                        //}
                     }
                  }
                 }
