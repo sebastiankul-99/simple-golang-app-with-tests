@@ -44,9 +44,7 @@ pipeline {
                 sh 'ls /build'
                 sh 'ls /output'
                 sh 'ls /output/simple-golang-app-with-tests'
-                scripts{
-                    sh 'docker ps '
-                }
+                
             }
            
         }
