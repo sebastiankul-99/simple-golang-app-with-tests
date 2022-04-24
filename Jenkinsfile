@@ -19,23 +19,14 @@ pipeline {
                     }
                 }
             steps {
-                sh 'ls'
-                sh 'rm -rf app'
-                sh 'ls'
-                sh 'ls ../'
-                sh 'ls ../../'
-                sh 'ls ~/'
-                sh 'ls /app/simple-golang-app-with-tests'
-                sh 'go version'
-
-                 
                 sh 'rm -rf /build/*'
                 sh 'rm -rf /output/*'
                 sh 'pwd'
                 sh 'cd '
                 sh 'ls'
                 
-                sh 'cp -r /app/simple-golang-app-with-tests/!(simple-golang-app-with-tests)  /build/'
+               // sh 'cp -r /app/simple-golang-app-with-tests/!(simple-golang-app-with-tests)  /build/'
+                sh 'cp -r . /build/'
                 sh 'cp -r  /app/simple-golang-app-with-tests /output/'
                 sh 'ls /build'
                 sh 'ls output'
