@@ -15,7 +15,7 @@ pipeline {
                 docker {
                     image'docker_app_build_image:latest'
                     args '-v in-vol:/build  -v out-vol:/output  --user root'
-                    reuseNode true
+                    reuseNode false
                     }
                 }
             steps {
