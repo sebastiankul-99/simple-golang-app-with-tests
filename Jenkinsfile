@@ -5,7 +5,7 @@ pipeline {
         dockerfile {
             filename 'Dockerfile-build'
             dir 'build'
-            label 'docker_app_build_image'
+            //label 'docker_app_build_image'
             args '-v in-vol:/build  -v out-vol:/output'
         }
         
