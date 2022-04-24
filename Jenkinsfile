@@ -49,6 +49,7 @@ pipeline {
                 }
             steps {
                 sh 'go test'
+                sh 'cat go.mod'
                 sh 'ls /app/simple-golang-app-with-tests'
                 sh 'go env'
                 sh 'go test /app/simple-golang-app-with-tests'
