@@ -26,11 +26,9 @@ pipeline {
                 sh 'ls /app/simple-golang-app-with-tests'
                 sh 'go version'
 
-                dir(path: '../../../../app/simple-golang-app-with-tests') {
-               
-
-                sh 'pwd'
-                 }
+                dir("${env.WORKSPACE}/app/simple-golang-app-with-tests"){
+                    sh "pwd"
+                    }   
              //   sh 'rm -r ../../build/*'
               //  sh 'rm -r ../../output/*'
                 sh 'pwd'
