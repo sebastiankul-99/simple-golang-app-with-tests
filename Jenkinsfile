@@ -26,7 +26,7 @@ pipeline {
                 sh 'ls /app/simple-golang-app-with-tests'
                 sh 'go version'
 
-                dir('/app/simple-golang-app-with-tests') {
+                dir('~/app/simple-golang-app-with-tests/') {
                
                 sh 'ls'
                  }
