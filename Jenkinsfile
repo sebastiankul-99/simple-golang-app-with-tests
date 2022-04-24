@@ -1,31 +1,34 @@
 pipeline {
     agent any
-
     stages {
         stage('CreateBuildImage') {
             steps {
                    
                     sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
                     sh "docker images "
-                    sh "docker volume ls"
-                    sh 'ls '
-                    sh 'ls ../'
                     
                  }
         }
         stage('Build') {
-            
-                
+            agent {
+                docker {
+                    image'docker_app_build_image:latest'
+                    args '-v in-vol:/build  -v out-vol:/output '
+                    reuseNode false
+                    }
+                }
             steps {
-                
-                sh "docker run -v in-vol:/build -v out-vol:/output  --rm -i docker_app_build_image:latest"
                 sh 'ls'
                 sh 'ls ../'
                 sh 'ls ../../'
-                sh 'rm -r ../../build/*'
-                sh 'rm -r ../../output/*'
-                sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
-                sh 'cp -r  . ../../output/'
+             //   sh 'rm -r ../../build/*'
+              //  sh 'rm -r ../../output/*'
+                sh 'pwd'
+                sh 'cd '
+                sh 'ls'
+                
+               // sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
+               // sh 'cp -r  . ../../output/'
             }
            
         }
