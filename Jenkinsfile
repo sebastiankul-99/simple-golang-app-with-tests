@@ -14,7 +14,7 @@ pipeline {
             agent {
                 docker {
                     image'docker_app_build_image:latest'
-                    args '-v in-vol:/build  -v out-vol:/output '
+                    args '-v in-vol:/build  -v out-vol:/output -w /app/simple-golang-app-with-tests '
                     reuseNode true
                     }
                 }
