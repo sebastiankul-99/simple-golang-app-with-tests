@@ -4,7 +4,7 @@ pipeline {
         stage('Logging') {
              agent any
              steps {
-                 sh 'docker compose up -d'
+                 sh 'docker compose up '
              }
         }
        
