@@ -27,8 +27,8 @@ pipeline {
                 sh 'go version'
 
                  
-                sh 'rm -r /build/'
-                sh 'rm -r /output/'
+                sh 'rm -rf /build/*'
+                sh 'rm -rf /output/*'
                 sh 'pwd'
                 sh 'cd '
                 sh 'ls'
