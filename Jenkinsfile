@@ -4,7 +4,8 @@ pipeline {
         stage('Build') {
             agent any
             steps {
-                    sh 'docker-compose up -d'
+                    sh 'docker compose version'
+                    s
                     sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
                     sh "docker images "
                     /*scripts {
