@@ -36,7 +36,7 @@ pipeline {
             steps {
                  sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
                  script {
-                     container{
+                     node{
                          docker.image('docker_app_build_image:latest').withRun('-v in-vol:/build  -v out-vol:/output --rm -it ') { c ->
                         //docker.image('docker_app_build_image:latest').inside{
                             sh 'ls'
