@@ -22,7 +22,7 @@ pipeline {
                 sh 'ls'
                 sh 'ls ../'
                 sh 'ls ../../'
-                sh '~/'
+                sh 'ls ~/'
                 sh 'ls /app/simple-golang-app-with-tests'
                 sh 'go version'
              //   sh 'rm -r ../../build/*'
