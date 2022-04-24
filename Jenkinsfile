@@ -20,6 +20,7 @@ pipeline {
                 }
             steps {
                 sh 'ls'
+                sh 'rm -rf app'
                 sh 'ls ../'
                 sh 'ls ../../'
                 sh 'ls ~/'
