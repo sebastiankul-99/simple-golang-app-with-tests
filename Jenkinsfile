@@ -37,7 +37,7 @@ pipeline {
             agent {
                 docker { 
                     image'docker_app_build_image:latest'
-                    args '-v in-vol:/build  -v out-vol:/output --rm -it'
+                    args '-v in-vol:/build  -v out-vol:/output '
                     }
                 }
             steps {
@@ -45,7 +45,7 @@ pipeline {
                     sh 'ls'
                     sh 'ls ../'
                     sh 'ls ../../'
-                    sh 'docker images'
+        
                     sh 'rm -r ../../build/*'
 
                     sh 'rm -r ../../output/*'
