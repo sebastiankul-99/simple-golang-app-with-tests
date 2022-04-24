@@ -1,15 +1,14 @@
 pipeline {
     agent any
 
-    def dockerfile_build = 'Dockerfile-build'
-    def dockerfile_test = 'Dockerfile-test'
-    def buildImage = docker.build("docker_app_build_image:latest", "-f ${dockerfile_build} .") 
-    def testImage = docker.build("docker_app_build_test:latest", "-f ${dockerfile_test} .") 
+   
+    docker.build("docker_app_build_image:latest", "-f Dockerfile-build .") 
+    docker.build("docker_app_build_test:latest", "-f Dockerfile-test .") 
     stages {
         stage('Build') {
             agent {
                 docker { 
-                    image:'docker_app_build_image:latest'
+                    image 'docker_app_build_image:latest'
                     args '-v in-vol:/build  -v out-vol:/output --rm'
                     }
                 }
