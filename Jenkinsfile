@@ -20,7 +20,7 @@ pipeline {
                     sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
                     sh 'cp -r  . ../../output/'
                 }
-            }
+                       
         }
         stage('Test') {
             steps {
