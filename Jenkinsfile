@@ -7,7 +7,11 @@ pipeline {
    // def testImage = docker.build("docker_app_build_test:latest", "-f ${dockerfile_test} .") 
     stages {
         stage('Build') {
-            
+            agent {
+                docker { 
+                
+                    }
+                }
             steps {
                 sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
                 docker.image('docker_app_build_image:latest').withRun('-v in-vol:/build  -v out-vol:/output --rm') { c ->
