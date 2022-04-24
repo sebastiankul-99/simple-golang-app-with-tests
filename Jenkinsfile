@@ -49,7 +49,7 @@ pipeline {
                 }
             steps {
                 sh 'go test'
-                sh 'cd /app/simple-golang-app-with-tests && go test '
+                sh 'cd /output/simple-golang-app-with-tests && go test '
                 
                
             }
