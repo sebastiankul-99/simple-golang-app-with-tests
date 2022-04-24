@@ -7,7 +7,7 @@ pipeline {
                    
                     sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
                     sh "docker images "
-                    scripts {
+                    /*scripts {
                          
                          def  build_container = docker.image('docker_app_build_image:latest', "--rm build_container").withRun('--name build_container -v in-vol:/build  -v out-vol:/output  --user root') { 
                                 //docker.image('docker_app_build_image:latest').inside{
@@ -23,9 +23,9 @@ pipeline {
                            }
                         }
                     
-                 }
+                 }*/
         }
-        /*
+        
         stage('CopyBuildToVolumes') {
             agent {
                 docker {
@@ -45,7 +45,7 @@ pipeline {
                 sh 'ls /output/simple-golang-app-with-tests'
             }
            
-        }*/
+        }
         stage('BuildTest') {
             agent any
             steps {
