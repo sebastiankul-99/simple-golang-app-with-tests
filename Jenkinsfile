@@ -21,9 +21,10 @@ pipeline {
                                     sh 'ls /output/simple-golang-app-with-tests'
                                 //}
                            }
-                        }
+                        }*/
                     
-                 }*/
+            }     
+
         }
         
         stage('CopyBuildToVolumes') {
