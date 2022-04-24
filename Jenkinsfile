@@ -7,6 +7,9 @@ pipeline {
                    
                     sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
                     sh "docker images "
+                    sh "docker volume ls"
+                    sh 'ls '
+                    sh 'ls ../'
                     
                  }
         }
