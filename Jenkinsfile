@@ -18,7 +18,7 @@ pipeline {
                 
             steps {
                 
-                sh "docker run -v in-vol:/build -v out-vol:/output --name --rm -i docker_app_build_image:latest"
+                sh "docker run -v in-vol:/build -v out-vol:/output  --rm -i docker_app_build_image:latest"
                 sh 'ls'
                 sh 'ls ../'
                 sh 'ls ../../'
