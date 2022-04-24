@@ -26,17 +26,17 @@ pipeline {
                 sh 'ls /app/simple-golang-app-with-tests'
                 sh 'go version'
 
-                dir("${env.WORKSPACE}/../../../../app/simple-golang-app-with-tests"){
-                    sh "pwd"
-                    }   
-             //   sh 'rm -r ../../build/*'
-              //  sh 'rm -r ../../output/*'
+                 
+                sh 'rm -r /build/*'
+                sh 'rm -r /output/*'
                 sh 'pwd'
                 sh 'cd '
                 sh 'ls'
                 
-               // sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
-               // sh 'cp -r  . ../../output/'
+                sh 'cp -r !(/app/simple-golang-app-with-tests/simple-golang-app-with-tests)  /build/'
+                sh 'cp -r  /app/simple-golang-app-with-tests /output/'
+                sh 'ls /build'
+                sh 'ls output'
             }
            
         }
