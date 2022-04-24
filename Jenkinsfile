@@ -36,31 +36,25 @@ pipeline {
                  }
         }
         stage('Build') {
-            /*agent {
-                docker { 
+            agent {
+                docker {
                     image'docker_app_build_image:latest'
                     args '-v in-vol:/build  -v out-vol:/output '
                     }
-                }*/
-            agent any
-            steps {
-                 script {
-                     node{
-                         docker.image('docker_app_build_image:latest').withRun('-v in-vol:/build  -v out-vol:/output --rm -it ') { c ->
-                        docker.image('docker_app_build_image:latest').inside{
-                            sh 'ls'
-                            sh 'ls ../'
-                            sh 'ls ../../'
-                            sh 'rm -r ../../build/*'
-                            sh 'rm -r ../../output/*'
-                            sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
-                            sh 'cp -r  . ../../output/'
-                        }
-                        }
-                     }
-                    
-                 }
+                    // Run the container on the node specified at the top-level of the Pipeline, in the same workspace, rather than on a new node entirely:
+                    reuseNode true
+                }
             }
+            steps {
+                sh 'ls'
+                sh 'ls ../'
+                sh 'ls ../../'
+                sh 'rm -r ../../build/*'
+                sh 'rm -r ../../output/*'
+                sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
+                sh 'cp -r  . ../../output/'
+            }
+           
         }
 
         stage('Test') {
