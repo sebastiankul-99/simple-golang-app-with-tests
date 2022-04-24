@@ -69,7 +69,10 @@ pipeline {
             }
         }
         stage('Deploy') {
+            agent any
             steps {
+
+                sh 'docker ps -a'
                 echo 'Deploying....'
             }
         }
