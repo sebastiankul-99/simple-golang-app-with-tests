@@ -21,6 +21,8 @@ pipeline {
             steps {
                 sh 'node --version'
                 sh 'ls '
+                sh 'ls ../'
+                
             }
             /*agent {
                 docker {
