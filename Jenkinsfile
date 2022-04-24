@@ -26,6 +26,7 @@ pipeline {
                 sh 'cp -r  /app/simple-golang-app-with-tests /output/'
                 sh 'ls /build'
                 sh 'ls /output'
+                sh 'ls /output/simple-golang-app-with-tests'
             }
            
         }
@@ -47,7 +48,7 @@ pipeline {
                     }
                 }
             steps {
-                sh 'go test /output'
+                sh 'go test /output/simple-golang-app-with-tests'
                
             }
         }
