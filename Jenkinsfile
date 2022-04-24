@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    
     stages {
         stage('CreateBuildImage') {
             steps {
@@ -14,9 +15,8 @@ pipeline {
                 docker {
                     image'docker_app_build_image:latest'
                     args '-v in-vol:/build  -v out-vol:/output '
-                    }
-                    // Run the container on the node specified at the top-level of the Pipeline, in the same workspace, rather than on a new node entirely:
                     reuseNode true
+                    }
                 }
             steps {
                 sh 'ls'
