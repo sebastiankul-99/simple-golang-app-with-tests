@@ -29,7 +29,7 @@ pipeline {
                 sh 'cp -r . /build/'
                 sh 'cp -r  /app/simple-golang-app-with-tests /output/'
                 sh 'ls /build'
-                sh 'ls output'
+                sh 'ls /output'
             }
            
         }
