@@ -26,33 +26,34 @@ pipeline {
         docker.build("docker_app_build_test:latest", "-f Dockerfile-test .") 
    }*/
     stages {
-        stage('Build') {
-            /*agent {
-                docker { 
-                    image'docker_app_build_image:latest'
-                   // args '-v in-vol:/build  -v out-vol:/output --rm'
-                    }
-                }*/
+        stage('CreateBuildImage') {
+            
             steps {
-                 sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
-                 script {
-                     node{
-                         docker.image('docker_app_build_image:latest').withRun('-v in-vol:/build  -v out-vol:/output --rm -it ') { c ->
-                        //docker.image('docker_app_build_image:latest').inside{
-                            sh 'ls'
-                            sh 'ls ../'
-                            sh 'ls ../../'
-                            sh 'rm -r ../../build/*'
-
-                            sh 'rm -r ../../output/*'
-                            sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
-                            sh 'cp -r  . ../../output/'
-                        //}
-                        }
-                     }
+                    sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
                     
                  }
+        }
+        stage('Build') {
+            agent {
+                docker { 
+                    image'docker_app_build_image:latest'
+                    args '-v in-vol:/build  -v out-vol:/output --rm'
+                    }
                 }
+            steps {
+                 
+                    sh 'ls'
+                    sh 'ls ../'
+                    sh 'ls ../../'
+                    sh 'rm -r ../../build/*'
+
+                    sh 'rm -r ../../output/*'
+                    sh 'cp -r !(simple-golang-app-with-tests)  ../../build/'
+                    sh 'cp -r  . ../../output/'
+                       
+                    
+                 }
+        }
                        
         }
         stage('Test') {
