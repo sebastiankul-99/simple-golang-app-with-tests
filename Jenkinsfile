@@ -21,6 +21,7 @@ pipeline {
                 sh 'ls'
                 sh 'ls ../'
                 sh 'ls ../../'
+                sh 'go --version'
              //   sh 'rm -r ../../build/*'
               //  sh 'rm -r ../../output/*'
                 sh 'pwd'
