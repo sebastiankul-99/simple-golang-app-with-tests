@@ -1,12 +1,12 @@
 pipeline {
     agent none
     stages {
-        stage('Logging') {
+        /*stage('Logging') {
              agent any
              steps {
                  sh '/usr/local/bin/docker-compose up -d'
              }
-        }
+        }*/
        
         stage('Build') {
             agent any
