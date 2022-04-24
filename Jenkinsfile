@@ -33,7 +33,7 @@ pipeline {
                 sh 'cd '
                 sh 'ls'
                 
-                sh 'cp -r !(/app/simple-golang-app-with-tests/simple-golang-app-with-tests)  /build/'
+                sh 'cp -r /app/simple-golang-app-with-tests/!(simple-golang-app-with-tests)  /build/'
                 sh 'cp -r  /app/simple-golang-app-with-tests /output/'
                 sh 'ls /build'
                 sh 'ls output'
