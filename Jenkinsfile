@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('CreateBuildImage') {
+        stage('Build') {
             agent any
             steps {
                    
@@ -10,7 +10,7 @@ pipeline {
                     
                  }
         }
-        stage('Build') {
+        stage('CopyBuildToVolumes') {
             agent {
                 docker {
                     image'docker_app_build_image:latest'
@@ -21,10 +21,6 @@ pipeline {
             steps {
                 sh 'rm -rf /build/*'
                 sh 'rm -rf /output/*'
-                sh 'pwd'
-                sh 'cd '
-                sh 'ls'
-                
                // sh 'cp -r /app/simple-golang-app-with-tests/!(simple-golang-app-with-tests)  /build/'
                 sh 'cp -r . /build/'
                 sh 'cp -r  /app/simple-golang-app-with-tests /output/'
@@ -33,10 +29,26 @@ pipeline {
             }
            
         }
-
-        stage('Test') {
+        stage('BuildTest') {
+            agent any
             steps {
-                echo 'Testing..'
+                   
+                    sh "docker build --file Dockerfile-test --tag docker_app_build_test:latest ."
+                    sh "docker images "
+                    
+                 }
+        }
+        stage('Test') {
+             agent {
+                docker {
+                    image'docker_app_build_test:latest'
+                    args '-v in-vol:/build  -v out-vol:/output  --user root'
+                    reuseNode false
+                    }
+                }
+            steps {
+                sh 'go test /output'
+               
             }
         }
         stage('Deploy') {
