@@ -1,0 +1,8 @@
+FROM golang:1.16-alpine
+WORKDIR "/app"
+RUN apk add git 
+RUN git clone https://github.com/sebastiankul-99/simple-golang-app-with-tests.git
+WORKDIR "/app/simple-golang-app-with-tests"
+RUN go mod download
+RUN go build 
+

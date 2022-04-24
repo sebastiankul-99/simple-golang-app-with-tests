@@ -1,0 +1,2 @@
+FROM docker_app_build_image:latest
+RUN go test
