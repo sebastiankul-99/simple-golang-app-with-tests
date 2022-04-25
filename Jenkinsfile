@@ -96,15 +96,13 @@ pipeline {
                 sh 'docker rm fluentd'
                 sh ' cd logs && cat test.log.* > output.log'
                  scripts {
-                         
-                         node {
-                                
-                                
-                                def clean_up = docker.image('docker_app_build_test').withRun('--name clean_up --rm --user root') { c ->
-                                    /* Wait until mysql service is up */
-                                    sh 'ls'
-                                }
-                            }
+    
+                        def clean_up = docker.image('docker_app_build_test').withRun('--name clean_up --rm --user root') { c ->
+                            /* Wait until mysql service is up */
+                            sh 'ls'
+                        }
+          
+                       
                     }
 
                 
