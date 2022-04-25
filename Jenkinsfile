@@ -6,8 +6,8 @@ pipeline {
              steps {
                 sh 'mkdir -p logs'
                 sh 'docker run -d  --name fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.11-debian'
-            //    sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
-              //  sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
+                sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
+                sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
                sh 'sleep 1s'
              }
         }
@@ -90,7 +90,7 @@ pipeline {
                 sh 'ls logs'
               //  sh 'ls /var/lib/docker/containers'
                 echo 'Deploying....'
-               // sh 'docker stop iperf-server'
+                sh 'docker stop iperf-server'
                 
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
