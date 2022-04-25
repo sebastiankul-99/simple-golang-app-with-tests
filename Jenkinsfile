@@ -83,6 +83,7 @@ pipeline {
             steps {
 
                 sh 'docker ps -a'
+                sh 'ls '
                 echo 'Deploying....'
             }
         }
