@@ -116,5 +116,19 @@ pipeline {
                 archiveArtifacts artifacts: 'output.log', fingerprint: true        
             }
         }
+        stage('deploy') {
+            agent any
+            steps {
+               
+                script {
+                    docker.image('docker_app_build_test').withRun('--user root -v out-vol:/output') { c->
+                   
+                    sh 'cd /output/simple-golang-app-with-tests && ./simple-golang-app-with-tests'
+                    
+                    }
+                }    
+                    
+            }
+        }
     }
 }
