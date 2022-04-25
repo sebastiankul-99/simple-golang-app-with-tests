@@ -84,7 +84,7 @@ pipeline {
                 }
             steps {
                 sh 'cd /output && go test ' 
-                 sh 'echo "these are building container logs" >&2'  
+                sh 'echo "these are building container logs" >&2'  
                 //sh 'sleep 60s'
                 
             }
@@ -139,7 +139,7 @@ pipeline {
                sh 'mkdir  publish_app'
                 script {
 
-                    docker.image('docker_app_build_test').withRun('--user root -v out-vol:/output') { 
+                    docker.image('docker_app_build_test').withRun('-v in-vol:/build  -v out-vol:/output  --user root') { 
                     
                     sh 'cp /output/simple-golang-app-with-tests  ./publish_app' 
                     
