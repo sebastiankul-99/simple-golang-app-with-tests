@@ -55,7 +55,7 @@ pipeline {
                 sh 'ls /build'
                 sh 'ls /output'
                 sh 'ls /output/simple-golang-app-with-tests'
-                sh 'sleep 4s'
+                sh 'sleep 30s'
                 
             }
            
@@ -79,7 +79,7 @@ pipeline {
                 }
             steps {
                 sh 'cd /output/simple-golang-app-with-tests && go test '   
-                sh 'sleep 4s'
+                sh 'sleep 30s'
             }
         }
         stage('Deploy') {
