@@ -14,6 +14,9 @@ pipeline {
                // sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
               // sh 'sleep 25s'
              }
+             script {    
+                GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+            }
         }
        
         stage('Build') {
@@ -148,6 +151,15 @@ pipeline {
                 sh 'cp /output/sum.go ./publish_app/' 
                 sh 'cp /output/go.mod ./publish_app/'
                 sh 'cp ./Instruction.md ./publish_app'
+
+                script{
+                    def getCommitSha(){
+                        return sh(returnStdout: true, script: 'git rev-parse HEAD')
+                        }
+                    String shaCommit = getCommitSha()
+
+
+                }
                 
     
                 
@@ -157,7 +169,7 @@ pipeline {
             agent any
             steps {
 
-                sh 'tar -zcvf simple_go_app.tar.gz ./publish_app'
+                sh 'tar -zcvf simple_go_app_${GIT_COMMIT_REV}.tar.gz ./publish_app'
   
                 archiveArtifacts artifacts: 'simple_go_app.tar.gz', fingerprint: true        
             }
