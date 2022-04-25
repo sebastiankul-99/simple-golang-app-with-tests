@@ -95,13 +95,17 @@ pipeline {
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
                 sh ' cd logs && cat test.log.* > output.log'
-                scripts {
-                    node{
-                    docker.image('docker_app_build_image:latest', "--rm clean_container").withRun('--name clean_container ') { 
-                            sh ' cd logs && cat test.log.* > output.log'
-                    }
-                    }
-                 }
+                 scripts {
+                         
+                         def  build_container = docker.image('docker_app_build_image:latest', "--rm build_container").withRun('--name build_container -v in-vol:/build  -v out-vol:/output  --user root') { 
+                                //docker.image('docker_app_build_image:latest').inside{
+                           
+                                    sh 'ls /build'
+                                    sh 'ls /output'
+                                    sh 'ls /output/simple-golang-app-with-tests'
+                                //}
+                           }
+                        }
 
                 
                 
