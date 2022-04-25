@@ -8,7 +8,7 @@ pipeline {
                 sh 'docker run -d  --name fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.11-debian'
             //    sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
               //  sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
-               sh 'sleep 15s'
+               sh 'sleep 1s'
              }
         }
        
@@ -55,7 +55,7 @@ pipeline {
                 sh 'ls /build'
                 sh 'ls /output'
                 sh 'ls /output/simple-golang-app-with-tests'
-                sh 'sleep 30s'
+                sh 'sleep 1s'
                 
             }
            
@@ -79,7 +79,7 @@ pipeline {
                 }
             steps {
                 sh 'cd /output/simple-golang-app-with-tests && go test '   
-                sh 'sleep 30s'
+                sh 'sleep 1s'
             }
         }
         stage('Deploy') {
@@ -96,9 +96,10 @@ pipeline {
                 sh 'docker rm fluentd'
                 sh ' cd logs && cat test.log.* > output.log'
                 scripts {
-                         
-                    def  build_container = docker.image('docker_app_build_image:latest', "--rm clean_container").withRun('--name clean_container ') { 
+                    node{
+                    docker.image('docker_app_build_image:latest', "--rm clean_container").withRun('--name clean_container ') { 
                             sh ' cd logs && cat test.log.* > output.log'
+                    }
                     }
                  }
 
