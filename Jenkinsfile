@@ -8,7 +8,7 @@ pipeline {
                  sh 'docker run -d --name fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.11-debian'
                 sh 'docker network create devops-net'
                 sh ' docker run --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s'
-                sh 'docker run --name iperf-client --network devops-net  -it  networkstatic/iperf3 -c iperf-server'
+                sh 'docker run --name iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
              }
         }
        
