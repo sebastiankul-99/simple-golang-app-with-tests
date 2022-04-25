@@ -6,7 +6,7 @@ pipeline {
              steps {
                  sh 'docker stop fluentd'
                  sh 'docker rm fluentd'
-                 sh 'docker ls /var/lig/docker/containers'
+                 sh 'ls /var/lig/docker/containers'
                  sh 'docker run -d --name fluentd --user root -v /var/lig/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.11-debian'
              }
         }
