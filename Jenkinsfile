@@ -91,6 +91,7 @@ pipeline {
               //  sh 'ls /var/lib/docker/containers'
                 echo 'Deploying....'
                // sh 'docker stop iperf-server'
+                sh ' cd logs && cat test.log.* > output.log'
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
                 
