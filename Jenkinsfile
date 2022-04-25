@@ -6,6 +6,7 @@ pipeline {
              steps {
                  
                  sh 'ls ${DIND_USER_HOME}'
+                 sh 'ls ${JENKINS_CONTAINER}'
                  sh 'docker run -d --name fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.11-debian'
              }
         }
