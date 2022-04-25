@@ -122,8 +122,8 @@ pipeline {
                
                 script {
                     docker.image('docker_app_build_test').withRun('--user root -v out-vol:/output') { c->
-                   
-                    sh 'cd /output/simple-golang-app-with-tests && ./simple-golang-app-with-tests'
+                    sh 'ls /output/simple-golang-app-with-tests '
+                    //sh 'cd /output/simple-golang-app-with-tests && ./simple-golang-app-with-tests'
                     
                     }
                 }    
