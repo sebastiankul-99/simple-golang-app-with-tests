@@ -7,9 +7,9 @@ pipeline {
                 sh 'mkdir -p logs'
                 sh 'cd logs && mkdir -p test.log'
                 sh 'docker run -d  --name fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.14.6-debian-1.0'
-                sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
-                sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
-               sh 'sleep 1s'
+               // sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
+               // sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
+               sh 'sleep 25s'
              }
         }
        
@@ -52,12 +52,12 @@ pipeline {
                 sh 'rm -rf /output/*'
                // sh 'cp -r /app/simple-golang-app-with-tests/!(simple-golang-app-with-tests)  /build/'
                 sh 'cp -r /app/simple-golang-app-with-tests/*  /build/'
-               // sh 'rm /build/simple-golang-app-with-tests' 
+                sh 'rm /build/simple-golang-app-with-tests' 
                 sh 'cp -r  /app/simple-golang-app-with-tests /output/'
                 sh 'ls /build'
                 sh 'ls /output'
                 sh 'ls /output/simple-golang-app-with-tests'
-                sh 'sleep 1s'
+                sh 'sleep 60s'
                 
             }
            
@@ -81,7 +81,7 @@ pipeline {
                 }
             steps {
                 sh 'cd /output/simple-golang-app-with-tests && go test '   
-                sh 'sleep 1s'
+                sh 'sleep 60s'
             }
         }
         stage('Deploy') {
@@ -92,7 +92,7 @@ pipeline {
                 sh 'ls logs'
               //  sh 'ls /var/lib/docker/containers'
                 echo 'Deploying....'
-                sh 'docker stop iperf-server'
+                //sh 'docker stop iperf-server'
                 
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
