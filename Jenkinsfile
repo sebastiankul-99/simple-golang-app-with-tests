@@ -55,10 +55,9 @@ pipeline {
                // sh 'cp -r /app/simple-golang-app-with-tests/!(simple-golang-app-with-tests)  /build/'
                 sh 'cp -r /app/simple-golang-app-with-tests/*  /build/'
                 sh 'rm /build/simple-golang-app-with-tests' 
-                sh 'cp -r  /app/simple-golang-app-with-tests /output/'
+                sh 'cp -r  /app/simple-golang-app-with-tests/* /output/'
                 sh 'ls /build'
                 sh 'ls /output'
-                sh 'ls /output/simple-golang-app-with-tests'
                 sh 'echo "these are building container logs" >&2'
                 //sh 'sleep 60s'
                 
@@ -84,7 +83,7 @@ pipeline {
                     }
                 }
             steps {
-                sh 'cd /output/simple-golang-app-with-tests && go test ' 
+                sh 'cd /output && go test ' 
                  sh 'echo "these are building container logs" >&2'  
                 //sh 'sleep 60s'
                 
@@ -125,8 +124,8 @@ pipeline {
                     }
                 }
             steps {
-                sh 'ls /output/simple-golang-app-with-tests '
-                sh 'cd /output/simple-golang-app-with-tests && go test ' 
+                sh 'ls /output'
+                sh 'cd /output && go test ' 
                 
                 //sh 'sleep 60s'
                 
