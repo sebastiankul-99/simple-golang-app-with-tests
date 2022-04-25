@@ -113,10 +113,7 @@ pipeline {
                     
                     }
                 }    
-                archiveArtifacts artifacts: 'output.log', fingerprint: true 
-
-                
-                
+                archiveArtifacts artifacts: 'output.log', fingerprint: true        
             }
         }
     }
