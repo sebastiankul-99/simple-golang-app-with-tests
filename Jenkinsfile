@@ -55,6 +55,7 @@ pipeline {
                 sh 'ls /build'
                 sh 'ls /output'
                 sh 'ls /output/simple-golang-app-with-tests'
+                sh 'sleep 4s'
                 
             }
            
@@ -78,6 +79,7 @@ pipeline {
                 }
             steps {
                 sh 'cd /output/simple-golang-app-with-tests && go test '   
+                sh 'sleep 4s'
             }
         }
         stage('Deploy') {
@@ -88,7 +90,7 @@ pipeline {
                 sh 'ls logs'
               //  sh 'ls /var/lib/docker/containers'
                 echo 'Deploying....'
-                sh 'docker stop iperf-server'
+               // sh 'docker stop iperf-server'
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
                 
