@@ -57,7 +57,7 @@ pipeline {
                 sh 'ls /build'
                 sh 'ls /output'
                 sh 'ls /output/simple-golang-app-with-tests'
-                sh 'logger -s These are building container logs!'
+                sh 'echo "these are building container logs" >&2'
                 sh 'sleep 60s'
                 
             }
@@ -69,7 +69,7 @@ pipeline {
                    
                     sh "docker build --file Dockerfile-test --tag docker_app_build_test:latest ."
                     sh "docker images "
-                    sh 'logger -s These are testing container logs!'
+                    
                     
                  }
         }
@@ -82,8 +82,10 @@ pipeline {
                     }
                 }
             steps {
-                sh 'cd /output/simple-golang-app-with-tests && go test '   
+                sh 'cd /output/simple-golang-app-with-tests && go test ' 
+                 sh 'echo "these are building container logs" >&2'  
                 sh 'sleep 60s'
+                
             }
         }
         stage('Deploy') {
