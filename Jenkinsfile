@@ -152,15 +152,6 @@ pipeline {
                 sh 'cp /output/go.mod ./publish_app/'
                 sh 'cp ./Instruction.md ./publish_app'
 
-                script{
-                    def getCommitSha(){
-                        return sh(returnStdout: true, script: 'git rev-parse HEAD')
-                        }
-                    String shaCommit = getCommitSha()
-
-
-                }
-                
     
                 
             }
