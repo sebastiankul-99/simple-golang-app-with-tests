@@ -6,6 +6,8 @@ pipeline {
              steps {
                 sh 'mkdir -p logs'
                 sh 'cd logs && mkdir -p test.log'
+                sh 'cd logs and touch test.log.0000_first'
+                sh 'echo "these are logs collected by fluentd " >logs/test.log.first'
                 sh 'docker run -d  --name fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.14.6-debian-1.0'
                // sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
                // sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
