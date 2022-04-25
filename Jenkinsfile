@@ -139,7 +139,7 @@ pipeline {
                sh 'mkdir  publish_app'
                 script {
 
-                    docker.image('docker_app_build_test').withRun('--user root -v out-vol:/output') { c->
+                    docker.image('docker_app_build_test').withRun('--user root -v out-vol:/output') { 
                     
                     sh 'cp /output/simple-golang-app-with-tests  ./publish_app' 
                     
