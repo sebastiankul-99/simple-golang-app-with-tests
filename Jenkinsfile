@@ -94,10 +94,11 @@ pipeline {
                 
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
-                sh ' cd logs && cat test.log.* > output.log'
+               
                 script {
                     docker.image('docker_app_build_test').withRun('--user root --rm ') { c->
                     sh 'ls'
+                     sh ' cd logs && cat test.log.* > output.log'
                     }
                 }     
 
