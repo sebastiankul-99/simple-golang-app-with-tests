@@ -145,7 +145,8 @@ pipeline {
                 sh 'mkdir  publish_app'
                 sh 'rm -f simple_go_app.tar.gz'
                 sh 'ls /output'
-                sh 'cp /output/simple-golang-app-with-tests ./publish_app/' 
+                sh 'cp /output/sum.go ./publish_app/' 
+                sh 'cp /output/go.mod ./publish_app/'
                 
     
                 
