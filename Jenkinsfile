@@ -96,10 +96,11 @@ pipeline {
                 sh 'docker rm fluentd'
                
                 script {
-                    docker.image('docker_app_build_test').withRun('--user root ') { c->
+                    docker.image('docker_app_build_test').withRun('--user root -v `pwd`/logs:/temporary') { c->
                     sh 'ls'
                     sh 'rm output.log'
                     sh 'cat logs/test.log.* > output.log'
+                    sh 'cd logs && touch tmp.file'
                     
                     }
                 }     
