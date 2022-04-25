@@ -88,6 +88,7 @@ pipeline {
                 sh 'ls logs'
               //  sh 'ls /var/lib/docker/containers'
                 echo 'Deploying....'
+                sh 'docker stop iperf-server'
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
                 
