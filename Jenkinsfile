@@ -125,7 +125,7 @@ pipeline {
                 }
             steps {
                 sh 'ls /output'
-                sh 'cd /output && go test ' 
+                sh 'cd /output && ./simple-golang-app-with-tests ' 
                 
                 //sh 'sleep 60s'
                 
