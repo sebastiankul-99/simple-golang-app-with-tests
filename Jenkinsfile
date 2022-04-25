@@ -4,7 +4,7 @@ pipeline {
         stage('Logging') {
              agent any
              steps {
-                 sh 'docker compose up '
+                 sh 'docker run --name fluentd --user root -v /var/lig/docker/containers:/fluentd/log/containers -v ./fluent.conf:/fluentd/etc/fluent.conf -v ./logs:/output --log-driver local fluent/fluentd:v1.11-debian'
              }
         }
        
