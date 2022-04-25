@@ -2,6 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Logging') {
+            
              agent any
              steps {
                 sh 'mkdir -p logs'
@@ -101,7 +102,7 @@ pipeline {
                 
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
-               
+                
                 script {
                     docker.image('docker_app_build_test').withRun('--user root') { c->
                     sh 'ls'
@@ -131,21 +132,32 @@ pipeline {
                 
             }
         }
+         stage('Prepublish') {
+             agent {
+                docker {
+                    image'docker_app_build_test:latest'
+                    args '-v in-vol:/build  -v out-vol:/output  --user root'
+                    reuseNode false
+                    }
+                }
+            steps {
+                sh 'rm -rf publish_app'
+                sh 'mkdir  publish_app'
+                sh 'rm -f simple_go_app.tar.gz'
+                sh 'ls /output'
+                sh 'cp /output/simple-golang-app-with-tests ./publish_app/' 
+                
+    
+                
+            }
+        }
          stage('Publish') {
             agent any
             steps {
 
-               sh 'rm -rf publish_app'
-               sh 'mkdir  publish_app'
-                script {
-
-                    docker.image('docker_app_build_test').withRun('-v in-vol:/build  -v out-vol:/output  --user root') { 
-                    
-                    sh 'cp /output/simple-golang-app-with-tests  ./publish_app' 
-                    
-                    }
-                }    
-                archiveArtifacts artifacts: 'output.log', fingerprint: true        
+                sh 'tar -zcvf simple_go_app.tar.gz ./publish_app'
+  
+                archiveArtifacts artifacts: 'simple_go_app.tar.gz', fingerprint: true        
             }
         }
     }
