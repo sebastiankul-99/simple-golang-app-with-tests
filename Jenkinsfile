@@ -131,5 +131,22 @@ pipeline {
                 
             }
         }
+         stage('Publish') {
+            agent any
+            steps {
+
+               sh 'rm -rf publish_app'
+               sh 'mkdir  publish_app'
+                script {
+
+                    docker.image('docker_app_build_test').withRun('--user root -v out-vol:/output') { c->
+                    
+                    sh 'cp /output/simple-golang-app-with-tests  ./publish_app' 
+                    
+                    }
+                }    
+                archiveArtifacts artifacts: 'output.log', fingerprint: true        
+            }
+        }
     }
 }
