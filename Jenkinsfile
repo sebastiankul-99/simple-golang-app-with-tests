@@ -16,6 +16,7 @@ pipeline {
                 script {    
                     GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
                 }
+                sh 'ls ${GIT_COMMIT_REV}'
              }
              
         }
@@ -147,7 +148,7 @@ pipeline {
             steps {
                 sh 'rm -rf publish_app'
                 sh 'mkdir  publish_app'
-                sh 'rm -f simple_go_app.tar.gz'
+                sh 'rm -f simple_go_app*.tar.gz'
                 sh 'ls /output'
                 sh 'cp /output/sum.go ./publish_app/' 
                 sh 'cp /output/go.mod ./publish_app/'
@@ -161,9 +162,9 @@ pipeline {
             agent any
             steps {
 
-                sh 'tar -zcvf simple_go_app_${GIT_COMMIT_REV}.tar.gz ./publish_app'
+                sh 'tar -zcvf simple_go_app${GIT_COMMIT_REV}.tar.gz ./publish_app'
   
-                archiveArtifacts artifacts: 'simple_go_app.tar.gz', fingerprint: true        
+                archiveArtifacts artifacts: 'simple_go_app*.tar.gz', fingerprint: true        
             }
         }
     }
