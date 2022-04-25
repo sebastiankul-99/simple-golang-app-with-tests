@@ -57,6 +57,7 @@ pipeline {
                 sh 'ls /build'
                 sh 'ls /output'
                 sh 'ls /output/simple-golang-app-with-tests'
+                sh 'logger -s These are building container logs!'
                 sh 'sleep 60s'
                 
             }
@@ -68,6 +69,7 @@ pipeline {
                    
                     sh "docker build --file Dockerfile-test --tag docker_app_build_test:latest ."
                     sh "docker images "
+                    sh 'logger -s These are testing container logs!'
                     
                  }
         }
