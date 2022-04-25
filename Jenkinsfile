@@ -101,6 +101,7 @@ pipeline {
                     sh 'rm output.log'
                     sh 'cat logs/test.log.* > output.log'
                     sh 'cd logs && touch tmp.file'
+                    sh 'rm -rf logs'
                     
                     }
                 }     
