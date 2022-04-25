@@ -91,9 +91,16 @@ pipeline {
               //  sh 'ls /var/lib/docker/containers'
                 echo 'Deploying....'
                // sh 'docker stop iperf-server'
-                sh ' cd logs && cat test.log.* > output.log'
+                
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
+                sh ' cd logs && cat test.log.* > output.log'
+                scripts {
+                         
+                    def  build_container = docker.image('docker_app_build_image:latest', "--rm clean_container").withRun('--name build_container  --user root') { 
+                            sh ' cd logs && cat test.log.* > output.log'
+                    }
+                 }
                 
                 
             }
