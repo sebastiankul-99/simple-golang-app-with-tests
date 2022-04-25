@@ -101,6 +101,7 @@ pipeline {
                             sh ' cd logs && cat test.log.* > output.log'
                     }
                  }
+                 
                 
                 
             }
