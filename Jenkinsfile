@@ -85,7 +85,7 @@ pipeline {
             steps {
 
                 sh 'docker ps -a'
-                sh 'ls '
+                sh 'ls logs'
               //  sh 'ls /var/lib/docker/containers'
                 echo 'Deploying....'
                 sh 'docker stop fluentd'
