@@ -147,6 +147,7 @@ pipeline {
                 sh 'ls /output'
                 sh 'cp /output/sum.go ./publish_app/' 
                 sh 'cp /output/go.mod ./publish_app/'
+                sh 'cp ./Instruction.md ./publish_app'
                 
     
                 
