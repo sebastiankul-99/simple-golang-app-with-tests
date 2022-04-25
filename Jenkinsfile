@@ -94,6 +94,7 @@ pipeline {
                 sh 'docker stop fluentd'
                 sh 'docker rm fluentd'
                 
+                
             }
         }
     }
