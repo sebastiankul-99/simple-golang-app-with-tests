@@ -97,11 +97,11 @@ pipeline {
                 sh ' cd logs && cat test.log.* > output.log'
                 scripts {
                          
-                    def  build_container = docker.image('docker_app_build_image:latest', "--rm clean_container").withRun('--name build_container  --user root') { 
+                    def  build_container = docker.image('docker_app_build_image:latest', "--rm clean_container").withRun('--name clean_container ') { 
                             sh ' cd logs && cat test.log.* > output.log'
                     }
                  }
-                 
+
                 
                 
             }
