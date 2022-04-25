@@ -98,7 +98,9 @@ pipeline {
                 script {
                     docker.image('docker_app_build_test').withRun('--user root --rm ') { c->
                     sh 'ls'
-                     sh 'cat logs/test.log.* > output.log'
+                    sh 'rm output.log'
+                    sh 'cat logs/test.log.* > output.log'
+                    sh 'exit'
                     }
                 }     
 
