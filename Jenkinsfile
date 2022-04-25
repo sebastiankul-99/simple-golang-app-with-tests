@@ -116,18 +116,20 @@ pipeline {
                 archiveArtifacts artifacts: 'output.log', fingerprint: true        
             }
         }
-        stage('deploy') {
-            agent any
-            steps {
-               
-                script {
-                    docker.image('docker_app_build_test').withRun('--user root -v out-vol:/output') { c->
-                    sh 'ls /output/simple-golang-app-with-tests '
-                    //sh 'cd /output/simple-golang-app-with-tests && ./simple-golang-app-with-tests'
-                    
+        stage('Deploy') {
+             agent {
+                docker {
+                    image'docker_app_build_test:latest'
+                    args '-v in-vol:/build  -v out-vol:/output  --user root'
+                    reuseNode false
                     }
-                }    
-                    
+                }
+            steps {
+                sh 'ls /output/simple-golang-app-with-tests '
+                sh 'cd /output/simple-golang-app-with-tests && go test ' 
+                
+                //sh 'sleep 60s'
+                
             }
         }
     }
