@@ -18,9 +18,9 @@ pipeline {
                // sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
               // sh 'sleep 25s'
                 script {    
-                    env.GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
+                    $GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
                 }
-                sh 'ls ${GIT_COMMIT_REV}'
+                sh 'echo ${GIT_COMMIT_REV}'
              }
              
         }
