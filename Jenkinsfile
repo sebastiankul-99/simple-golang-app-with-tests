@@ -113,14 +113,14 @@ pipeline {
                 script {
                     docker.image('docker_app_build_test').withRun('--user root') { c->
                     sh 'ls'
-                    sh 'rm output.log'
-                    sh 'cat logs/test.log.* > output.log'
+                    sh 'rm -rf containers*.log'
+                    sh 'cat logs/test.log.* > containers_${GIT_COMMIT_REV}.log'
                 
                     sh 'rm -rf logs'
                     
                     }
                 }    
-                archiveArtifacts artifacts: 'output.log', fingerprint: true        
+                archiveArtifacts artifacts: ' containers*.log', fingerprint: true        
             }
         }
         stage('Deploy') {
@@ -164,7 +164,7 @@ pipeline {
             agent any
             steps {
 
-                sh 'tar -zcvf simple_go_app${GIT_COMMIT_REV}.tar.gz ./publish_app'
+                sh 'tar -zcvf simple_go_app_${GIT_COMMIT_REV}.tar.gz ./publish_app'
   
                 archiveArtifacts artifacts: 'simple_go_app*.tar.gz', fingerprint: true        
             }
