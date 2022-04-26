@@ -15,6 +15,7 @@ pipeline {
                // sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
                // sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
               // sh 'sleep 25s'
+                sh 'docker run reddis --rm'
                 script {    
                     env.GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
                 }
@@ -92,7 +93,7 @@ pipeline {
                 }
             steps {
                 sh 'cd /output && go test ' 
-                sh 'echo "these are building container logs" >&2'  
+                sh 'echo "these are building container logs" > &2'  
                 //sh 'sleep 60s'
                 
             }
@@ -101,10 +102,7 @@ pipeline {
             agent any
             steps {
 
-                sh 'docker ps -a'
-                sh 'ls logs'
               //  sh 'ls /var/lib/docker/containers'
-                echo 'Deploying....'
                 //sh 'docker stop iperf-server'
                 
                 sh 'docker stop fluentd'
@@ -112,7 +110,6 @@ pipeline {
                 
                 script {
                     docker.image('docker_app_build_test').withRun('--user root') { c->
-                    sh 'ls'
                     sh 'rm -rf containers*.log'
                     sh 'cat logs/test.log.* > containers_${GIT_COMMIT_REV}.log'
                 
@@ -151,7 +148,6 @@ pipeline {
                 sh 'rm -rf publish_app'
                 sh 'mkdir  publish_app'
                 sh 'rm -f simple_go_app*.tar.gz'
-                sh 'ls /output'
                 sh 'cp /output/sum.go ./publish_app/' 
                 sh 'cp /output/go.mod ./publish_app/'
                 sh 'cp ./Instruction.md ./publish_app'
