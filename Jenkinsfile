@@ -96,7 +96,7 @@ pipeline {
                 }
             steps {
                 sh 'cd /output && go test ' 
-                sh 'echo "these are building container logs" > $2'  
+               
                 //sh 'sleep 60s'
                 
             }
