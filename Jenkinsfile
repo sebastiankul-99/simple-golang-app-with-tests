@@ -189,12 +189,17 @@ pipeline {
         }
     }
     post{
-         failure {
-            sh 'docker stop fluentd'
+        node('any') {
+            failure {
+                sh 'docker stop fluentd'
+            }
         }
-        always{
-            sh 'docker rmi docker_app_build_test'
-            sh 'docker rmi docker_app_build_image'
+        node('any') {
+            always{
+                sh 'docker rmi docker_app_build_test'
+            
+                sh 'docker rmi docker_app_build_image'
+            }
         }
     }
 }
