@@ -3,7 +3,7 @@ pipeline {
     
     parameters{
         string(name: 'VERSION', defaultValue: '1.0.0', description: 'realise version')
-        boleanParam(name: 'RELEASE', defaultValue: false, description: 'should promote to release version')
+        booleanParam(name: 'RELEASE', defaultValue: false, description: 'should promote to release version')
     }
 
     stages {
