@@ -105,28 +105,7 @@ pipeline {
                 
             }
         }
-        stage('clean-up') {
-            agent any
-            steps {
-
-              //  sh 'ls /var/lib/docker/containers'
-                //sh 'docker stop iperf-server'
-                
-                sh 'docker stop fluentd'
-                sh 'docker rm fluentd'
-                
-                script {
-                    docker.image('docker_app_build_test').withRun('--user root') { c->
-                    sh 'rm -rf containers*.log'
-                    sh 'cat logs/test.log.* > containers_${GIT_COMMIT_REV}.log'
-                
-                    sh 'rm -rf logs'
-                    
-                    }
-                }    
-                archiveArtifacts artifacts: ' containers*.log', fingerprint: true        
-            }
-        }
+        
         stage('Deploy') {
              agent {
                 docker {
@@ -188,6 +167,28 @@ pipeline {
                 sh 'cat simple_go_app_${VERSION}.tar.gz | sha512sum > checksum.txt'
                 archiveArtifacts artifacts: 'simple_go_app*.tar.gz', fingerprint: true   
                 archiveArtifacts artifacts: 'checksum.txt', fingerprint: true 
+            }
+        }
+        stage('clean-up') {
+            agent any
+            steps {
+
+              //  sh 'ls /var/lib/docker/containers'
+                //sh 'docker stop iperf-server'
+                
+                sh 'docker stop fluentd'
+                sh 'docker rm fluentd'
+                
+                script {
+                    docker.image('docker_app_build_test').withRun('--user root') { c->
+                    sh 'rm -rf containers*.log'
+                    sh 'cat logs/test.log.* > containers_${GIT_COMMIT_REV}.log'
+                
+                    sh 'rm -rf logs'
+                    
+                    }
+                }    
+                archiveArtifacts artifacts: ' containers*.log', fingerprint: true        
             }
         }
     }
