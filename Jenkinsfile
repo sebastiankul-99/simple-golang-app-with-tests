@@ -183,9 +183,7 @@ pipeline {
                     docker.image('docker_app_build_test').withRun('--user root') { c->
                     sh 'rm -rf containers*.log'
                     sh 'cat logs/test.log.* > containers_${GIT_COMMIT_REV}.log'
-                
                     sh 'rm -rf logs'
-                    
                     }
                 }    
                 archiveArtifacts artifacts: ' containers*.log', fingerprint: true        
