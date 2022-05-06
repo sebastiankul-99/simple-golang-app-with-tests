@@ -169,7 +169,8 @@ pipeline {
                 archiveArtifacts artifacts: 'checksum.txt', fingerprint: true 
             }
         }
-         post {
+    }
+     post {
             agent any
             always {
                 sh 'docker stop fluentd'
@@ -195,5 +196,4 @@ pipeline {
                 echo 'Things were different before...'
             }
         }
-    }
 }
