@@ -1,6 +1,10 @@
 pipeline {
     agent none
     
+    parameters{
+        string(name: 'VERSION', defaultValue: '1.0.0', description: 'realise version')
+        boleanParam(name: 'RELEASE', defaultValue: false, description: 'should promote to release version')
+    }
 
     stages {
         stage('Logging') {
@@ -9,7 +13,7 @@ pipeline {
              steps {
                 sh 'mkdir -p logs'
                 sh 'cd logs && mkdir -p test.log'
-                sh 'cd logs and touch test.log.ZZ_first'
+                sh 'cd logs and touch test.log.zz_first'
                 sh 'echo "these are logs collected by fluentd " >logs/test.log.first'
                 sh 'docker run -d  --name fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.14.6-debian-1.0'
                // sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
@@ -159,13 +163,29 @@ pipeline {
                 
             }
         }
-         stage('Publish') {
+         stage('Publish unoficial version') {
+             when{
+                 environment name: 'RELEASE'. value: 'false'
+             }
             agent any
             steps {
 
                 sh 'tar -zcvf simple_go_app_${GIT_COMMIT_REV}.tar.gz ./publish_app'
-  
+                sh 'cat simple_go_app_${GIT_COMMIT_REV}.tar.gz | sha512sum > checksum.txt'
                 archiveArtifacts artifacts: 'simple_go_app*.tar.gz', fingerprint: true        
+            }
+        }
+         stage('Publish release version') {
+             when{
+                 environment name: 'RELEASE'. value: 'true'
+             }
+            agent any
+            steps {
+
+                sh 'tar -zcvf simple_go_app_v_${VERSION}.tar.gz ./publish_app'
+                sh 'cat simple_go_app_${VERSION}.tar.gz | sha512sum > checksum.txt'
+                archiveArtifacts artifacts: 'simple_go_app*.tar.gz', fingerprint: true   
+                archiveArtifacts artifacts: 'checksum.txt', fingerprint: true 
             }
         }
     }
