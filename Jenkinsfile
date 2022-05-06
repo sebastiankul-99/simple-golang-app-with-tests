@@ -15,7 +15,7 @@ pipeline {
                 sh 'cd logs && mkdir -p test.log'
                 sh 'cd logs and touch test.log.zz_first'
                 sh 'echo "these are logs collected by fluentd " >logs/test.log.first'
-                sh 'docker run -d  --name --rm fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.14.6-debian-1.0'
+                sh 'docker run -d  --name fluentd --user root -v /var/lib/docker/containers:/fluentd/log/containers -v `pwd`/fluent.conf:/fluentd/etc/fluent.conf -v `pwd`/logs:/output --log-driver local fluent/fluentd:v1.14.6-debian-1.0'
                // sh ' docker run --rm --name iperf-server --network devops-net  -p 5201:5201 -d  networkstatic/iperf3 -s '
                // sh 'docker run  --rm --name  iperf-client --network devops-net    networkstatic/iperf3 -c iperf-server'
               // sh 'sleep 25s'
@@ -169,11 +169,16 @@ pipeline {
                 archiveArtifacts artifacts: 'checksum.txt', fingerprint: true 
             }
         }
-    }
-     post {
+        stage('clean-up') {
             agent any
-            always {
+            steps {
+
+              //  sh 'ls /var/lib/docker/containers'
+                //sh 'docker stop iperf-server'
+                
                 sh 'docker stop fluentd'
+                sh 'docker rm fluentd'
+                
                 script {
                     docker.image('docker_app_build_test').withRun('--user root') { c->
                     sh 'rm -rf containers*.log'
@@ -181,19 +186,8 @@ pipeline {
                     sh 'rm -rf logs'
                     }
                 }    
-                archiveArtifacts artifacts: ' containers*.log', fingerprint: true   
-            }
-            success {
-                echo 'I succeeded!'
-            }
-            unstable {
-                echo 'I am unstable :/'
-            }
-            failure {
-                echo 'I failed :('
-            }
-            changed {
-                echo 'Things were different before...'
+                archiveArtifacts artifacts: ' containers*.log', fingerprint: true        
             }
         }
+    }
 }
