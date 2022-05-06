@@ -153,6 +153,7 @@ pipeline {
                 }
             steps {
                 sh 'rm -rf publish_app'
+                sh 'rm -rf checksum.txt'
                 sh 'mkdir  publish_app'
                 sh 'rm -f simple_go_app*.tar.gz'
                 sh 'cp /output/sum.go ./publish_app/' 
