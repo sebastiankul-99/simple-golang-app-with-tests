@@ -170,7 +170,10 @@ pipeline {
             }
         }
         stage('clean-up') {
-            agent any
+            agent {
+                any 
+                label 'clean-up'
+            }
             steps {
 
               //  sh 'ls /var/lib/docker/containers'
@@ -190,12 +193,12 @@ pipeline {
     }
     post{
         failure{
-            node('any')  {
+            node('clean-up')  {
                 sh 'docker stop fluentd'
             }
         }
         always{
-            node('any') {
+            node('clean-up') {
                 sh 'docker rmi docker_app_build_test'
             
                 sh 'docker rmi docker_app_build_image'
