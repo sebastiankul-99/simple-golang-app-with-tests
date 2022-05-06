@@ -173,7 +173,8 @@ pipeline {
 
                 sh 'tar -zcvf simple_go_app_${GIT_COMMIT_REV}.tar.gz ./publish_app'
                 sh 'cat simple_go_app_${GIT_COMMIT_REV}.tar.gz | sha512sum > checksum.txt'
-                archiveArtifacts artifacts: 'simple_go_app*.tar.gz', fingerprint: true        
+                archiveArtifacts artifacts: 'simple_go_app*.tar.gz', fingerprint: true   
+                archiveArtifacts artifacts: 'checksum.txt', fingerprint: true      
             }
         }
          stage('Publish release version') {
