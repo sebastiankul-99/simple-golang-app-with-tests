@@ -171,8 +171,9 @@ pipeline {
         }
         stage('clean-up') {
             agent {
-                any 
-                label 'clean-up'
+                any {
+                    label 'clean-up'
+                }
             }
             steps {
 
