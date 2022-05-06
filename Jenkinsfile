@@ -2,7 +2,7 @@ pipeline {
     agent none
     
     parameters{
-        string(name: 'VERSION', defaultValue: '1.0.0', description: 'realise version')
+        string(name: 'VERSION', defaultValue: '1.0.0', description: 'release version')
         booleanParam(name: 'RELEASE', defaultValue: false, description: 'should promote to release version')
     }
 
@@ -164,7 +164,7 @@ pipeline {
                 
             }
         }
-         stage('Publish unoficial version') {
+         stage('Publish unofficial version') {
              when{
                  environment name: 'RELEASE', value: 'false'
              }
