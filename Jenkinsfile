@@ -170,11 +170,7 @@ pipeline {
             }
         }
         stage('clean-up') {
-            agent {
-                any {
-                    label 'clean-up'
-                }
-            }
+            agent any
             steps {
 
               //  sh 'ls /var/lib/docker/containers'
@@ -191,19 +187,19 @@ pipeline {
                 archiveArtifacts artifacts: ' containers*.log', fingerprint: true        
             }
         }
-    }
+    }/*
     post{
         failure{
-            node('clean-up')  {
+            node('any')  {
                 sh 'docker stop fluentd'
             }
         }
         always{
-            node('clean-up') {
+            node('any') {
                 sh 'docker rmi docker_app_build_test'
             
                 sh 'docker rmi docker_app_build_image'
             }
         }
-    }
+    }*/
 }
