@@ -165,7 +165,7 @@ pipeline {
         }
          stage('Publish unoficial version') {
              when{
-                 environment name: 'RELEASE'. value: 'false'
+                 environment name: 'RELEASE', value: 'false'
              }
             agent any
             steps {
@@ -177,7 +177,7 @@ pipeline {
         }
          stage('Publish release version') {
              when{
-                 environment name: 'RELEASE'. value: 'true'
+                 environment name: 'RELEASE', value: 'true'
              }
             agent any
             steps {
