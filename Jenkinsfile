@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
     
     parameters{
         string(name: 'VERSION', defaultValue: '1.0.0', description: 'release version')
