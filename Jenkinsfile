@@ -27,7 +27,7 @@ pipeline {
         }
        
         stage('Build') {
-            
+
             steps {
                     
                     sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
@@ -132,7 +132,7 @@ pipeline {
                 archiveArtifacts artifacts: 'checksum.txt', fingerprint: true 
             }
         }
-        stage('clean-up') {
+        stage('Clean-up') {
             steps {
                 sh 'docker stop fluentd'
                 script {
