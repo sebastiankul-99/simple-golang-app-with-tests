@@ -9,7 +9,6 @@ pipeline {
     stages {
         stage('Logging') {
             
-            // agent any
              steps {
                 sh 'mkdir -p logs'
                 sh 'cd logs && mkdir -p test.log'
@@ -22,13 +21,13 @@ pipeline {
                     env.GIT_COMMIT_REV = sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
                 }
                 sh 'docker stop red'
-                
+              
              }
              
         }
        
         stage('Build') {
-           // agent any
+            
             steps {
                     
                     sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
@@ -57,7 +56,7 @@ pipeline {
            
         }
         stage('BuildTest') {
-            //agent any
+        
             steps {
                    
                     sh "docker build --file Dockerfile-test --tag docker_app_build_test:latest ."
@@ -74,9 +73,7 @@ pipeline {
                 }
             steps {
                 sh 'cd /output && go test ' 
-               
-                //sh 'sleep 60s'
-                
+     
             }
         }
         
@@ -91,9 +88,6 @@ pipeline {
             steps {
                 sh 'ls /output'
                 sh 'cd /output && ./simple-golang-app-with-tests ' 
-                
-                //sh 'sleep 60s'
-                
             }
         }
          stage('Prepublish') {
@@ -111,17 +105,13 @@ pipeline {
                 sh 'rm -f simple_go_app*.tar.gz'
                 sh 'cp /output/*.go ./publish_app/' 
                 sh 'cp /output/go.* ./publish_app/'
-                sh 'cp ./Instruction.md ./publish_app'
-
-    
-                
+                sh 'cp ./Instruction.md ./publish_app'     
             }
         }
          stage('Publish unofficial version') {
              when{
                  environment name: 'RELEASE', value: 'false'
              }
-          //  agent any
             steps {
 
                 sh 'tar -zcvf simple_go_app_${GIT_COMMIT_REV}.tar.gz ./publish_app'
@@ -134,7 +124,6 @@ pipeline {
              when{
                  environment name: 'RELEASE', value: 'true'
              }
-           // agent any
             steps {
 
                 sh 'tar -zcvf simple_go_app_v_${VERSION}.tar.gz ./publish_app'
@@ -144,7 +133,6 @@ pipeline {
             }
         }
         stage('clean-up') {
-         //   agent any
             steps {
                 sh 'docker stop fluentd'
                 script {
