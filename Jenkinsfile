@@ -121,7 +121,7 @@ pipeline {
              when{
                  environment name: 'RELEASE', value: 'false'
              }
-            agent any
+          //  agent any
             steps {
 
                 sh 'tar -zcvf simple_go_app_${GIT_COMMIT_REV}.tar.gz ./publish_app'
