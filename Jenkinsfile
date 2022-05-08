@@ -52,6 +52,7 @@ pipeline {
                 sh 'rm /build/simple-golang-app-with-tests' 
                 sh 'cp -r  /app/simple-golang-app-with-tests/*.go /output/'   
                 sh 'cp -r  /app/simple-golang-app-with-tests/go.* /output/' 
+                sh 'cp -r  /app/simple-golang-app-with-tests/simple-golang-app-with-tests /output/' 
             }
            
         }
