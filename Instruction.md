@@ -2,7 +2,7 @@
 
 * zainstalowany golang na urządzeniu
 
-## Instructions:
+## Instruction:
 
 * wejsc w folder publish_app
 * nastepnie w folderze publish_app uruchomic komende go mod download
