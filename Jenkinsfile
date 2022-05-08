@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Logging') {
             
-             agent any
+            // agent any
              steps {
                 sh 'mkdir -p logs'
                 sh 'cd logs && mkdir -p test.log'
@@ -28,7 +28,7 @@ pipeline {
         }
        
         stage('Build') {
-            agent any
+           // agent any
             steps {
                     
                     sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
@@ -42,7 +42,7 @@ pipeline {
                 docker {
                     image'docker_app_build_image:latest'
                     args '-v in-vol:/build  -v out-vol:/output  --user root'
-                    reuseNode false
+                    reuseNode true
                     }
                 }
             steps {
@@ -57,7 +57,7 @@ pipeline {
            
         }
         stage('BuildTest') {
-            agent any
+            //agent any
             steps {
                    
                     sh "docker build --file Dockerfile-test --tag docker_app_build_test:latest ."
@@ -69,7 +69,7 @@ pipeline {
                 docker {
                     image'docker_app_build_test:latest'
                     args '-v in-vol:/build  -v out-vol:/output  --user root'
-                    reuseNode false
+                    reuseNode true
                     }
                 }
             steps {
@@ -85,7 +85,7 @@ pipeline {
                 docker {
                     image'docker_app_build_test:latest'
                     args '-v in-vol:/build  -v out-vol:/output  --user root'
-                    reuseNode false
+                    reuseNode true
                     }
                 }
             steps {
@@ -101,7 +101,7 @@ pipeline {
                 docker {
                     image'docker_app_build_test:latest'
                     args '-v in-vol:/build  -v out-vol:/output  --user root'
-                    reuseNode false
+                    reuseNode true
                     }
                 }
             steps {
@@ -134,7 +134,7 @@ pipeline {
              when{
                  environment name: 'RELEASE', value: 'true'
              }
-            agent any
+           // agent any
             steps {
 
                 sh 'tar -zcvf simple_go_app_v_${VERSION}.tar.gz ./publish_app'
@@ -144,7 +144,7 @@ pipeline {
             }
         }
         stage('clean-up') {
-            agent any
+         //   agent any
             steps {
                 sh 'docker stop fluentd'
                 script {
