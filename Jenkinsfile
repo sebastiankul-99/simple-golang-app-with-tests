@@ -27,13 +27,11 @@ pipeline {
         }
        
         stage('Build') {
-
             steps {
                     
-                    sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
-                    sh "docker images "
+                sh "docker build --file Dockerfile-build --tag docker_app_build_image:latest ."
+                sh "docker images "
             }     
-
         }
         
         stage('CopyBuildToVolumes') {
@@ -58,10 +56,9 @@ pipeline {
         stage('BuildTest') {
         
             steps {
-                   
-                    sh "docker build --file Dockerfile-test --tag docker_app_build_test:latest ."
-                    sh "docker images "
-                 }
+                sh "docker build --file Dockerfile-test --tag docker_app_build_test:latest ."
+                sh "docker images "
+            }
         }
         stage('Test') {
              agent {
@@ -120,8 +117,8 @@ pipeline {
                 archiveArtifacts artifacts: 'checksum.txt', fingerprint: true      
             }
         }
-         stage('Publish release version') {
-             when{
+        stage('Publish release version') {
+            when{
                  environment name: 'RELEASE', value: 'true'
              }
             steps {
